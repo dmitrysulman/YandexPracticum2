@@ -45,40 +45,37 @@ public class MonthlyReport {
     public String getMonthInfo() {
         StringBuilder result = new StringBuilder();
         result.append(yearMonth);
-        Item maxEarning = items.stream()
-                .filter(item -> !item.isExpense)
-                .max(Comparator.comparingInt(Item::getTotalCost))
-                .get();
-        Item maxExpense = items.stream()
+        Item maxEarning = getMaxEarning();
+        Item maxExpense = getMaxExpense();
+        result
+                .append("\nСамый прибыльный товар: ")
+                .append(maxEarning.itemName)
+                .append(", сумма: ")
+                .append(maxEarning.getTotalCost())
+                .append("\nСамая большая трата: ")
+                .append(maxExpense.itemName)
+                .append(", сумма: ")
+                .append(maxExpense.getTotalCost());
+        return result.toString();
+    }
+
+    private Item getMaxExpense() {
+        return items.stream()
                 .filter(Item::isExpense)
                 .max(Comparator.comparingInt(Item::getTotalCost))
-                .get();
-        result.append("\nСамый прибыльный товар: ").append(maxEarning.itemName).append(", сумма: ").append(maxEarning.getTotalCost());
-        result.append("\nСамая большая трата: ").append(maxExpense.itemName).append(", сумма: ").append(maxExpense.getTotalCost());
-        return result.toString();
+                .orElse(null);
+    }
+
+    private Item getMaxEarning() {
+        return items.stream()
+                .filter(item -> !item.isExpense)
+                .max(Comparator.comparingInt(Item::getTotalCost))
+                .orElse(null);
     }
 
     private record Item(String itemName, boolean isExpense, int quantity, int sumOfOne) {
         public int getTotalCost() {
             return quantity * sumOfOne;
         }
-
-        @Override
-        public String toString() {
-            return "Item{" +
-                    "itemName='" + itemName + '\'' +
-                    ", isExpense=" + isExpense +
-                    ", quantity=" + quantity +
-                    ", sumOfOne=" + sumOfOne +
-                    '}';
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "MonthlyReport{" +
-                "items=" + items +
-                ", month='" + yearMonth + '\'' +
-                '}';
     }
 }

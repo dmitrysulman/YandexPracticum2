@@ -5,32 +5,67 @@ import java.time.Year;
 import java.util.*;
 
 public class YearlyReport {
-    private final Map<Month, EarningsAndExpenses> earningsAndExpenses;
+    private final Map<Month, EarningsAndExpenses> monthEarningsAndExpensesMap;
     private final Year year;
 
     public YearlyReport(String year) {
         this.year = Year.parse(year);
-        this.earningsAndExpenses = new HashMap<>();
+        this.monthEarningsAndExpensesMap = new TreeMap<>();
     }
 
     public void addEarnings(String month, int earnings) {
-        earningsAndExpenses.computeIfAbsent(Month.of(Integer.parseInt(month)), k -> new EarningsAndExpenses()).setEarnings(earnings);
+        monthEarningsAndExpensesMap.computeIfAbsent(Month.of(Integer.parseInt(month)), k -> new EarningsAndExpenses())
+                .setEarnings(earnings);
     }
 
     public void addExpenses(String month, int expenses) {
-        earningsAndExpenses.computeIfAbsent(Month.of(Integer.parseInt(month)), k -> new EarningsAndExpenses()).setExpenses(expenses);
+        monthEarningsAndExpensesMap.computeIfAbsent(Month.of(Integer.parseInt(month)), k -> new EarningsAndExpenses())
+                .setExpenses(expenses);
     }
 
     public String getYear() {
         return year.toString();
     }
 
+    public String getYearInfo() {
+        StringBuilder result = new StringBuilder();
+        result.append(year);
+        for (Map.Entry<Month, EarningsAndExpenses> entry : monthEarningsAndExpensesMap.entrySet()) {
+            EarningsAndExpenses earningsAndExpenses = entry.getValue();
+            result
+                    .append("\nМесяц: ")
+                    .append(entry.getKey())
+                    .append(", прибыль: ")
+                    .append(earningsAndExpenses.getRevenue());
+        }
+        result
+                .append("\nCредний расход: ")
+                .append(getAverageExpenses())
+                .append(", средний доход: ")
+                .append(getAverageEarnings());
+        return result.toString();
+    }
+
+    public double getAverageEarnings() {
+        return monthEarningsAndExpensesMap.values().stream()
+                .mapToInt(EarningsAndExpenses::getEarnings)
+                .average()
+                .orElse(0.0);
+    }
+
+    public double getAverageExpenses() {
+        return monthEarningsAndExpensesMap.values().stream()
+                .mapToInt(EarningsAndExpenses::getExpenses)
+                .average()
+                .orElse(0.0);
+    }
+
     public Integer getMonthlyEarnings(int month) {
-        return earningsAndExpenses.get(Month.of(month)).getEarnings();
+        return monthEarningsAndExpensesMap.get(Month.of(month)).getEarnings();
     }
 
     public Integer getMonthlyExpenses(int month) {
-        return earningsAndExpenses.get(Month.of(month)).getExpenses();
+        return monthEarningsAndExpensesMap.get(Month.of(month)).getExpenses();
     }
 
     private static final class EarningsAndExpenses {
@@ -56,20 +91,8 @@ public class YearlyReport {
             this.expenses = expenses;
         }
 
-        @Override
-        public String toString() {
-            return "EarningsAndExpenses{" +
-                    "earnings=" + earnings +
-                    ", expenses=" + expenses +
-                    '}';
+        public int getRevenue() {
+            return earnings - expenses;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "YearlyReport{" +
-                "earningsAndExpenses=" + earningsAndExpenses +
-                ", year=" + year +
-                '}';
     }
 }

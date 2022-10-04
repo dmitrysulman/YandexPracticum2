@@ -51,6 +51,10 @@ public class Main {
                     }
                 }
                 case 4 -> {
+                    if (monthlyReports.isEmpty()) {
+                        System.out.println("Месячные отчеты не считаны");
+                        break;
+                    }
                     for (MonthlyReport monthlyReport : monthlyReports) {
                         if (monthlyReport != null) {
                             System.out.println(monthlyReport.getMonthInfo());
@@ -58,9 +62,15 @@ public class Main {
                         }
                     }
                 }
-                default -> {
-                    System.out.println("Неизвестная команда");
+                case 5 -> {
+                    if (yearlyReport == null) {
+                        System.out.println("Годовой отчет не считан");
+                        break;
+                    }
+                    System.out.println(yearlyReport.getYearInfo());
+                    System.out.println();
                 }
+                default -> System.out.println("Неизвестная команда");
             }
             printMenu();
             userInput = Integer.parseInt(scanner.nextLine());
@@ -68,6 +78,7 @@ public class Main {
     }
 
     private static void printMenu() {
+        System.out.println("Введите команду:");
         System.out.println("1.\tСчитать все месячные отчёты");
         System.out.println("2.\tСчитать годовой отчёт");
         System.out.println("3.\tСверить отчёты");
