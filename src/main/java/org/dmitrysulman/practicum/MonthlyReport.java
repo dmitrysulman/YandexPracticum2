@@ -4,6 +4,7 @@ import java.time.Month;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class MonthlyReport {
@@ -30,18 +31,38 @@ public class MonthlyReport {
     public Integer getTotalEarnings() {
         return items.stream()
                 .filter(item -> !item.isExpense)
-                .mapToInt(item -> item.sumOfOne * item.quantity)
+                .mapToInt(Item::getTotalCost)
                 .sum();
     }
 
     public Integer getTotalExpenses() {
         return items.stream()
-                .filter(item -> item.isExpense)
-                .mapToInt(item -> item.sumOfOne * item.quantity)
+                .filter(Item::isExpense)
+                .mapToInt(Item::getTotalCost)
                 .sum();
     }
 
+    public String getMonthInfo() {
+        StringBuilder result = new StringBuilder();
+        result.append(yearMonth);
+        Item maxEarning = items.stream()
+                .filter(item -> !item.isExpense)
+                .max(Comparator.comparingInt(Item::getTotalCost))
+                .get();
+        Item maxExpense = items.stream()
+                .filter(Item::isExpense)
+                .max(Comparator.comparingInt(Item::getTotalCost))
+                .get();
+        result.append("\nСамый прибыльный товар: ").append(maxEarning.itemName).append(", сумма: ").append(maxEarning.getTotalCost());
+        result.append("\nСамая большая трата: ").append(maxExpense.itemName).append(", сумма: ").append(maxExpense.getTotalCost());
+        return result.toString();
+    }
+
     private record Item(String itemName, boolean isExpense, int quantity, int sumOfOne) {
+        public int getTotalCost() {
+            return quantity * sumOfOne;
+        }
+
         @Override
         public String toString() {
             return "Item{" +

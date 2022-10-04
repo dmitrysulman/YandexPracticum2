@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d4e3387-edf2-4860-bdff-89de1ab32d34" name="Changes" comment="C1">
+    <list default="true" id="1d4e3387-edf2-4860-bdff-89de1ab32d34" name="Changes" comment="C2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/dmitrysulman/practicum/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/dmitrysulman/practicum/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/dmitrysulman/practicum/MonthlyReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/dmitrysulman/practicum/MonthlyReport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/dmitrysulman/practicum/ReportScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/dmitrysulman/practicum/ReportScanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/dmitrysulman/practicum/YearlyReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/dmitrysulman/practicum/YearlyReport.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +86,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1664873625859</updated>
-      <workItem from="1664873627634" duration="10590000" />
+      <workItem from="1664873627634" duration="12174000" />
     </task>
     <task id="LOCAL-00001" summary="C1">
       <created>1664882117206</created>
@@ -97,7 +95,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664882117206</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="C2">
+      <created>1664891442620</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1664891442620</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -116,7 +121,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="C1" />
-    <option name="LAST_COMMIT_MESSAGE" value="C1" />
+    <MESSAGE value="C2" />
+    <option name="LAST_COMMIT_MESSAGE" value="C2" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -10,7 +10,7 @@ public class Main {
         YearlyReport yearlyReport = null;
         Scanner scanner = new Scanner(System.in);
         printMenu();
-        int userInput = scanner.nextInt();
+        int userInput = Integer.parseInt(scanner.nextLine());
         while (userInput != 6) {
             switch (userInput) {
                 case 1 -> {
@@ -50,9 +50,20 @@ public class Main {
                         System.out.println("Данные в отчетах совпадают");
                     }
                 }
+                case 4 -> {
+                    for (MonthlyReport monthlyReport : monthlyReports) {
+                        if (monthlyReport != null) {
+                            System.out.println(monthlyReport.getMonthInfo());
+                            System.out.println();
+                        }
+                    }
+                }
+                default -> {
+                    System.out.println("Неизвестная команда");
+                }
             }
             printMenu();
-            userInput = scanner.nextInt();
+            userInput = Integer.parseInt(scanner.nextLine());
         }
     }
 
