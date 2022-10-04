@@ -17,7 +17,8 @@ public class ReportScanner {
             }
             return monthlyReport;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Невозможно прочитать файл " + e.getMessage());
+            return null;
         }
     }
 
@@ -38,7 +39,8 @@ public class ReportScanner {
             }
             return yearlyReport;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Невозможно прочитать файл " + e.getMessage());
+            return null;
         }
     }
 }

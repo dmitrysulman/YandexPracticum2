@@ -1,5 +1,6 @@
 package org.dmitrysulman.practicum;
 
+import java.time.Month;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -14,22 +15,40 @@ public class MonthlyReport {
         this.items = new ArrayList<>();
     }
 
-    public void addItem(String itemName, boolean isExpense, int quantity, int someOfOne) {
-        items.add(new Item(itemName, isExpense, quantity, someOfOne));
+    public void addItem(String itemName, boolean isExpense, int quantity, int sumOfOne) {
+        items.add(new Item(itemName, isExpense, quantity, sumOfOne));
     }
 
-    public String getYearMonth() {
-        return yearMonth.toString();
+    public int getMonthInt() {
+        return yearMonth.getMonth().getValue();
     }
 
-    private record Item(String itemName, boolean isExpense, int quantity, int someOfOne) {
+    public Month getMonth() {
+        return yearMonth.getMonth();
+    }
+
+    public Integer getTotalEarnings() {
+        return items.stream()
+                .filter(item -> !item.isExpense)
+                .mapToInt(item -> item.sumOfOne * item.quantity)
+                .sum();
+    }
+
+    public Integer getTotalExpenses() {
+        return items.stream()
+                .filter(item -> item.isExpense)
+                .mapToInt(item -> item.sumOfOne * item.quantity)
+                .sum();
+    }
+
+    private record Item(String itemName, boolean isExpense, int quantity, int sumOfOne) {
         @Override
         public String toString() {
             return "Item{" +
                     "itemName='" + itemName + '\'' +
                     ", isExpense=" + isExpense +
                     ", quantity=" + quantity +
-                    ", someOfOne=" + someOfOne +
+                    ", sumOfOne=" + sumOfOne +
                     '}';
         }
     }

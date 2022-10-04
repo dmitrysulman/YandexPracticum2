@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         List<MonthlyReport> monthlyReports = new ArrayList<>();
-        YearlyReport yearlyReport;
+        YearlyReport yearlyReport = null;
         Scanner scanner = new Scanner(System.in);
         printMenu();
         int userInput = scanner.nextInt();
@@ -17,21 +17,43 @@ public class Main {
                     for (int i = 1; i < 4; i++) {
                         monthlyReports.add(ReportScanner.scanFileToMonthlyReport("m.20210" + i + ".csv"));
                     }
-                    System.out.println(monthlyReports);
+                    if (!monthlyReports.contains(null)) {
+                        System.out.println("Месячные отчеты успешно считаны");
+                    }
                 }
                 case 2 -> {
                     yearlyReport = ReportScanner.scanFileToYearlyReport("y.2021.csv");
-                    System.out.println(yearlyReport);
+                    if (yearlyReport != null) {
+                        System.out.println("Годовой отчет успешно считан");
+                    }
+                }
+                case 3 -> {
+                    if (monthlyReports.isEmpty()) {
+                        System.out.println("Месячные отчеты не считаны");
+                        break;
+                    }
+                    if (yearlyReport == null) {
+                        System.out.println("Годовой отчет не считан");
+                        break;
+                    }
+                    boolean isSuccess = true;
+                    for (MonthlyReport monthlyReport : monthlyReports) {
+                        if (monthlyReport != null) {
+                            if (!monthlyReport.getTotalEarnings().equals(yearlyReport.getMonthlyEarnings(monthlyReport.getMonthInt())) ||
+                                    !monthlyReport.getTotalExpenses().equals(yearlyReport.getMonthlyExpenses(monthlyReport.getMonthInt()))) {
+                                System.out.println("Не совпадают данные в отчете за месяц: " + monthlyReport.getMonth());
+                                isSuccess = false;
+                            }
+                        }
+                    }
+                    if (isSuccess) {
+                        System.out.println("Данные в отчетах совпадают");
+                    }
                 }
             }
             printMenu();
             userInput = scanner.nextInt();
         }
-
-
-
-
-
     }
 
     private static void printMenu() {

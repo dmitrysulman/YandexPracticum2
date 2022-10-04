@@ -25,14 +25,17 @@ public class YearlyReport {
         return year.toString();
     }
 
+    public Integer getMonthlyEarnings(int month) {
+        return earningsAndExpenses.get(Month.of(month)).getEarnings();
+    }
+
+    public Integer getMonthlyExpenses(int month) {
+        return earningsAndExpenses.get(Month.of(month)).getExpenses();
+    }
+
     private static final class EarningsAndExpenses {
         private Integer earnings;
         private Integer expenses;
-
-        private EarningsAndExpenses(Integer earnings, Integer expenses) {
-            this.earnings = earnings;
-            this.expenses = expenses;
-        }
 
         public EarningsAndExpenses() {
         }
